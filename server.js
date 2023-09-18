@@ -1,7 +1,28 @@
-const app = require('./app');
+//https://nodejs-homework-rest-api-uuow.onrender.com/api/contacts
 
-const serverPort = process.env.PORT || 4000;
+const mongoose = require("mongoose")
 
-app.listen(serverPort, () => {
-  console.log(`Server running. Use our API on port: ${serverPort}`);
-});
+const app = require('./app')
+
+const { DB_HOST,PORT = 3000} = process.env;
+
+console.log(`DB_HOST :`,DB_HOST);
+ 
+mongoose.set('strictQuery',true)
+
+
+
+mongoose.connect(DB_HOST)
+.then(()=> {
+  app.listen(PORT, () => {
+    console.log("Database connection successful")
+  })
+})
+.catch(error => {
+  console.log(error.message)
+  process.exit(1);
+})
+
+
+
+ 
